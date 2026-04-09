@@ -1,0 +1,36 @@
+---
+description: Import pipeline and orchestration conventions
+globs: "packages/pipeline/**/*.ts"
+alwaysApply: false
+---
+
+# Pipeline Rules
+
+## Stage Architecture
+
+The pipeline is staged and explicit. Each stage has typed inputs and outputs:
+
+1. File selection
+2. Adapter detection and validation
+3. Raw persistence (file hash, metadata)
+4. Normalization to canonical entities
+5. Chunking (Phase 2)
+6. Indexing and embeddings (Phase 2)
+7. Candidate extraction (Phase 3)
+8. Entity resolution (Phase 4)
+9. Recommendation generation (Phase 3)
+10. Explanation generation (Phase 3)
+
+## Key Rules
+
+- Never create one giant "process everything" function. Each stage is a discrete, testable unit.
+- The `DatabasePort` interface decouples pipeline logic from the Tauri SQL plugin, enabling testing with mock implementations.
+- When new files are imported: process only the new batch, determine impacted entities, re-run affected logic. Avoid full rebuilds.
+- Every pipeline run creates a `PipelineRun` record with status, timing, and error details.
+- Parse warnings are persisted as `ParseWarning` records linked to the import batch.
+
+## Testing
+
+- Pipeline integration tests use `MockDb` from `tests/mock-db.ts` — do not require a real database.
+- Test the full flow: file input to persisted normalized data.
+- Test duplicate detection, unsupported file handling, and progress callbacks.

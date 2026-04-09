@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2023",
+    "useDefineForClassFields": true,
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@foldur/core": ["../../packages/core/src/index.ts"],
+      "@foldur/db": ["../../packages/db/src/index.ts"],
+      "@foldur/adapters": ["../../packages/adapters/src/index.ts"],
+      "@foldur/pipeline": ["../../packages/pipeline/src/index.ts"],
+      "@foldur/ui": ["../../packages/ui/src/index.ts"],
+      "@foldur/embeddings": ["../../packages/embeddings/src/index.ts"]
+    },
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "title": "Building a CLI tool",
+    "create_time": 1700000000,
+    "update_time": 1700003600,
+    "conversation_id": "conv-001",
+    "mapping": {
+      "root": {
+        "id": "root",
+        "message": null,
+        "parent": null,
+        "children": ["msg-1"]
+      },
+      "msg-1": {
+        "id": "msg-1",
+        "message": {
+          "id": "msg-1",
+          "author": { "role": "user" },
+          "create_time": 1700000100,
+          "content": {
+            "content_type": "text",
+            "parts": ["How do I build a CLI tool in Rust?"]
+          }
+        },
+        "parent": "root",
+        "children": ["msg-2"]
+      },
+      "msg-2": {
+        "id": "msg-2",
+        "message": {
+          "id": "msg-2",
+          "author": { "role": "assistant" },
+          "create_time": 1700000200,
+          "content": {
+            "content_type": "text",
+            "parts": ["Here's how to build a CLI tool in Rust:\n\n```rust\nuse clap::Parser;\n\n#[derive(Parser)]\nstruct Args {\n    name: String,\n}\n\nfn main() {\n    let args = Args::parse();\n    println!(\"Hello, {}!\", args.name);\n}\n```\n\nYou'll want to add `clap` to your Cargo.toml."]
+          }
+        },
+        "parent": "msg-1",
+        "children": ["msg-3"]
+      },
+      "msg-3": {
+        "id": "msg-3",
+        "message": {
+          "id": "msg-3",
+          "author": { "role": "user" },
+          "create_time": 1700000300,
+          "content": {
+            "content_type": "text",
+            "parts": ["Can you add error handling?"]
+          }
+        },
+        "parent": "msg-2",
+        "children": ["msg-4"]
+      },
+      "msg-4": {
+        "id": "msg-4",
+        "message": {
+          "id": "msg-4",
+          "author": { "role": "assistant" },
+          "create_time": 1700000400,
+          "content": {
+            "content_type": "text",
+            "parts": ["Sure! Here's an updated version with error handling:\n\n```rust\nuse anyhow::Result;\nuse clap::Parser;\n\nfn main() -> Result<()> {\n    let args = Args::parse();\n    Ok(())\n}\n```"]
+          }
+        },
+        "parent": "msg-3",
+        "children": []
+      }
+    }
+  },
+  {
+    "title": "Travel planning Japan",
+    "create_time": 1700100000,
+    "update_time": 1700103600,
+    "conversation_id": "conv-002",
+    "mapping": {
+      "root": {
+        "id": "root",
+        "message": null,
+        "parent": null,
+        "children": ["msg-a"]
+      },
+      "msg-a": {
+        "id": "msg-a",
+        "message": {
+          "id": "msg-a",
+          "author": { "role": "user" },
+          "create_time": 1700100100,
+          "content": {
+            "content_type": "text",
+            "parts": ["Help me plan a 2-week trip to Japan"]
+          }
+        },
+        "parent": "root",
+        "children": ["msg-b"]
+      },
+      "msg-b": {
+        "id": "msg-b",
+        "message": {
+          "id": "msg-b",
+          "author": { "role": "assistant" },
+          "create_time": 1700100200,
+          "content": {
+            "content_type": "text",
+            "parts": ["I'd love to help you plan a trip to Japan! Here's a suggested itinerary..."]
+          }
+        },
+        "parent": "msg-a",
+        "children": []
+      }
+    }
+  }
+]

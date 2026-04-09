@@ -1,0 +1,43 @@
+---
+description: Core architecture principles for Foldur — local-first personal intelligence engine
+alwaysApply: true
+---
+
+# Foldur Architecture Principles
+
+Foldur is an open-source, local-first personal intelligence engine. Every implementation decision must be evaluated against: **does this make the product a more trustworthy, local-first, source-agnostic personal intelligence engine?**
+
+## Non-Negotiable Constraints
+
+- All user data stays on-device by default. No hidden network calls, no content telemetry, no cloud sync unless explicitly enabled by the user.
+- The canonical internal schema is source-agnostic. Downstream logic never depends on raw ChatGPT/Claude/Cursor formats.
+- All derived intelligence (projects, goals, themes, recommendations) must link back to evidence via `EvidenceLink` records.
+- Incremental processing — new imports should not force a full rebuild of the intelligence layer.
+
+## Repository Structure
+
+```
+apps/desktop/          Tauri 2 + React + Vite desktop shell
+packages/core/         Canonical types, Zod schemas, enums
+packages/db/           SQLite migrations, repository layer
+packages/adapters/     Source adapters (ChatGPT, generic, future: Claude, Cursor)
+packages/pipeline/     Import orchestration, normalization
+packages/ui/           Shared React components
+packages/config/       Shared TypeScript/tooling configs
+docs/                  Specs, ADRs, adapter contracts
+```
+
+## Storage Layers (never collapse these)
+
+1. **Raw layer** — unmodified imported files
+2. **Normalized layer** — canonical sessions, messages, artifacts, chunks
+3. **Intelligence layer** — projects, goals, themes, patterns, recommendations
+4. **Provenance layer** — evidence links and run traces
+5. **Operational layer** — pipeline runs, parse errors, merge decisions
+
+## Module Boundaries
+
+- Adapters normalize data early. Everything downstream operates on canonical types only.
+- Pipeline stages have typed inputs and outputs and are testable in isolation.
+- Provider behavior (embedding, extraction, summarization) goes through explicit interfaces with clear local vs. remote separation.
+- UI code is isolated from domain logic. Pure scoring/ranking logic is separate from IO.

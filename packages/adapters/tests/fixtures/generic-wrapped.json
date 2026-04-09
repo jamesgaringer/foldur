@@ -1,0 +1,13 @@
+{
+  "title": "Database design discussion",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Should I use PostgreSQL or SQLite for a local-first app?"
+    },
+    {
+      "role": "assistant",
+      "content": "For a local-first desktop app, SQLite is typically the better choice. It's embedded, requires no server, and is widely supported."
+    }
+  ]
+}

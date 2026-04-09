@@ -1,0 +1,24 @@
+---
+description: Document completed work in docs/build-log after each feature or roadmap slice
+alwaysApply: true
+---
+
+# Build log documentation
+
+After you **complete a meaningful feature** or **finish a bounded chunk of work** aligned with the roadmap (not every tiny commit), update the project build log.
+
+## What to do
+
+1. **Add or update** a file under `docs/build-log/` — one file per phase slice or clearly named milestone (e.g. `phase-3-extraction.md`).
+2. **Follow the template** in `docs/build-log/README.md`: scope, what shipped, key files, follow-ups, and **Model** (user fills if not known — write `Not recorded` when assisting).
+3. **Update the index table** in `docs/build-log/README.md` when adding a new log file.
+4. If the roadmap checklist changed, **update** `docs/roadmap.md` checkboxes to match reality.
+
+## When this applies
+
+- **Yes:** A spec’d feature is done, a roadmap phase slice is shipped, or a multi-file vertical (e.g. db + pipeline + UI) is complete.
+- **No:** Drive-by fixes, typo-only edits, or single-line tweaks — unless they close a named task the user asked to log.
+
+## If unsure
+
+Prefer logging a short entry over skipping it. A minimal log is better than none.

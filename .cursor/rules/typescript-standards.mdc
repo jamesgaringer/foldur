@@ -1,0 +1,40 @@
+---
+description: TypeScript coding standards for Foldur
+globs: "**/*.ts,**/*.tsx"
+alwaysApply: false
+---
+
+# TypeScript Standards
+
+## Strict Typing
+
+- TypeScript strict mode is enabled everywhere. Do not weaken it.
+- Explicit return types on exported functions.
+- Zod schemas at every important boundary (adapter output, DB row parsing, pipeline stage I/O).
+- Never use `any` casually. Never rely on shape assumptions for imported data.
+
+## Imports and Modules
+
+- Use `.js` extensions in relative imports (required for ESM with `"type": "module"`).
+- Keep files focused — one concept or tightly related unit per file.
+- Domain types live in `@foldur/core`. Do not redefine them elsewhere.
+
+## Patterns
+
+```typescript
+// Canonical entity creation — always validate at boundary
+const session = SessionSchema.parse(rawRow);
+
+// Adapter output — use discriminated types, not loose objects
+type AdapterResult = { ok: true; data: NormalizeResult } | { ok: false; error: string };
+
+// Pipeline stages — typed input/output, pure where possible
+function normalizeMessages(raw: RawMessage[]): NewMessage[]
+```
+
+## What NOT to Do
+
+- Do not pass unvalidated source payloads deep into the system.
+- Do not scatter prompt strings across unrelated modules.
+- Do not use `as` casts to paper over type mismatches — fix the types.
+- Do not create barrel re-exports that obscure where things are defined.

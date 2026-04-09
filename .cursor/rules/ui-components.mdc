@@ -1,0 +1,43 @@
+---
+description: UI component and styling conventions
+globs: "**/*.tsx,**/*.css"
+alwaysApply: false
+---
+
+# UI Rules
+
+## Design System
+
+- Tailwind CSS 4 with CSS custom properties for the color palette.
+- Dark theme only for V1. Colors are defined in `apps/desktop/src/index.css`.
+- Shared components live in `packages/ui/`. Page-specific components live in `apps/desktop/src/`.
+
+## Color Variables
+
+```
+--color-bg             #0f1117    Page background
+--color-surface        #1a1d27    Sidebar, cards
+--color-surface-raised #232736    Hover states, elevated cards
+--color-border         #2e3347    Borders, dividers
+--color-text-primary   #e8eaf0    Primary text
+--color-text-secondary #8b90a5    Secondary text
+--color-text-muted     #5c6178    Disabled/placeholder text
+--color-accent         #6c8cff    Interactive elements
+--color-success        #4ade80    Success states
+--color-warning        #fbbf24    Warnings
+--color-error          #f87171    Errors
+```
+
+## UX Standards
+
+- The UI should feel calm, high-signal, private, and inspectable.
+- Foreground user state (projects, themes, patterns) — not raw files.
+- No gamification, no noisy cards, no unexplained intelligence claims.
+- Every derived entity shown in the UI must be traceable to evidence.
+- Zustand for local UI state (import progress, filters). Keep stores minimal.
+
+## Component Patterns
+
+- Components accept typed props — no `any` or loose object shapes.
+- Shared components expose `className` for Tailwind composition where useful.
+- Use `NavLink` from react-router-dom for navigation with active state styling.

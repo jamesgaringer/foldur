@@ -1,0 +1,42 @@
+---
+description: Rules for writing and modifying source adapters
+globs: "packages/adapters/**/*.ts"
+alwaysApply: false
+---
+
+# Adapter Rules
+
+Every source adapter implements the `SourceAdapter` interface from `@foldur/core`.
+
+## Interface Contract
+
+```typescript
+interface SourceAdapter {
+  readonly sourceType: SourceType;
+  readonly adapterVersion: string;
+  canParse(data: ArrayBuffer, fileName: string): Promise<boolean>;
+  parseRaw(data: ArrayBuffer, fileName: string): Promise<RawParseResult>;
+  normalize(raw: RawParseResult, sourceId: string, importBatchId: string): NormalizeResult;
+}
+```
+
+## Key Rules
+
+- `canParse` must be fast and never throw. Check file extension, magic bytes, or top-level structure only.
+- `parseRaw` preserves the raw payload and computes a content hash. May throw on truly unrecoverable format errors.
+- `normalize` converts to canonical `Session[]`, `Message[]`, `Artifact[]`. Must not depend on database or external state.
+- Emit `ParseWarning[]` for recoverable issues (missing timestamps, empty messages) — do not silently drop data.
+- Every adapter must be versioned. Import batches record the adapter version for future reprocessing.
+
+## Testing Requirements
+
+Every adapter needs fixture-based tests covering:
+1. `canParse` returns `true`/`false` correctly
+2. Correct session/message/artifact counts
+3. Message role, timestamp, and sort_order correctness
+4. Artifact extraction (code blocks, etc.)
+5. Warning generation for edge cases
+
+## Registration
+
+Adapters are registered in `packages/adapters/src/registry.ts`. More specific adapters must appear before the generic adapter since `detectAdapter()` returns the first match.

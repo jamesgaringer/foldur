@@ -1,0 +1,22 @@
+[
+  {
+    "role": "user",
+    "content": "What is the best way to learn TypeScript?",
+    "timestamp": "2024-01-15T10:00:00Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Start with the official TypeScript handbook, then practice by converting an existing JS project.",
+    "timestamp": "2024-01-15T10:00:30Z"
+  },
+  {
+    "role": "user",
+    "content": "Any recommended projects to convert?",
+    "timestamp": "2024-01-15T10:01:00Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Try converting a small Express API or a React component library.",
+    "timestamp": "2024-01-15T10:01:30Z"
+  }
+]

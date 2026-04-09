@@ -1,0 +1,41 @@
+---
+description: Privacy and security requirements for all code changes
+alwaysApply: true
+---
+
+# Privacy and Security Rules
+
+These rules apply to every code change without exception.
+
+## Default Privacy Contract
+
+- All user content stays local. No network calls for content processing unless the user explicitly enables a remote provider.
+- No content telemetry, no hidden analytics, no background uploads.
+- No remote model calls without explicit user opt-in.
+- Storage locations must be explicit, documented, and easy for the user to inspect, export, and delete.
+
+## Never Do These Things
+
+- Send imported text to an API without clear opt-in.
+- Log raw sensitive content remotely.
+- Enable cloud sync without explicit configuration.
+- Transmit embeddings or content off-device without disclosure.
+- Silently switch from local to remote processing.
+- Hide network usage in background flows.
+
+## Provider Separation
+
+If adding model-dependent behavior, it must go through a provider interface:
+
+```typescript
+interface EmbeddingProvider {
+  readonly isLocal: boolean;
+  embed(text: string): Promise<number[]>;
+}
+```
+
+Local and remote implementations must be clearly separated. The UI must disclose when a remote provider is active and what data is being sent.
+
+## Privacy Claims
+
+Only make claims that are technically true. Prefer: "By default, your data stays on your device." Avoid: "Nothing can ever leak."

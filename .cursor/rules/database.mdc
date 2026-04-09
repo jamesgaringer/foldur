@@ -1,0 +1,38 @@
+---
+description: Database and repository layer conventions
+globs: "packages/db/**/*.ts,packages/db/**/*.sql"
+alwaysApply: false
+---
+
+# Database Rules
+
+## Schema
+
+- SQLite via `@tauri-apps/plugin-sql`. All queries go through Tauri IPC.
+- Migrations are numbered `.sql` files in `packages/db/src/migrations/`.
+- All tables include `created_at` / `updated_at` where appropriate.
+- Foreign keys enforce referential integrity. Add indexes on common query paths.
+- Never conflate raw source payloads, normalized conversation structure, and inferred intelligence state in the same tables.
+
+## Repository Layer
+
+- Each entity type has a repository file in `packages/db/src/repositories/`.
+- Repository functions take a `Database` handle as the first argument and return Zod-validated types.
+- Use parameterized queries (`$1`, `$2`, ...) — never string interpolation.
+- Generate IDs with `generateId()` from `@foldur/core` (UUIDs).
+
+```typescript
+// Good pattern
+export async function createSession(db: Database, session: NewSession): Promise<Session> {
+  const id = generateId();
+  const now = nowISO();
+  await db.execute(`INSERT INTO sessions (...) VALUES ($1, $2, ...)`, [id, ...]);
+  return SessionSchema.parse({ id, ...session, created_at: now, updated_at: now });
+}
+```
+
+## Migrations
+
+- New migrations get the next sequential number: `002_*.sql`, `003_*.sql`, etc.
+- Migrations must be idempotent where possible (`CREATE TABLE IF NOT EXISTS`).
+- Copy new migration SQL files to `apps/desktop/src/migrations/` and register them in `db-store.ts`.

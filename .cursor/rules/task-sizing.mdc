@@ -1,0 +1,37 @@
+---
+description: How to scope and execute implementation tasks
+alwaysApply: true
+---
+
+# Task Sizing and Execution
+
+## Good Tasks (bounded, single-layer)
+
+- Implement ChatGPT adapter normalization
+- Add canonical `Session` schema and tests
+- Create evidence link repository methods
+- Build local import batch viewer component
+- Implement project merge scoring function
+
+## Bad Tasks (too broad, cross-cutting)
+
+- Build the whole app
+- Make the intelligence better
+- Refactor everything
+- Support all imports everywhere
+
+## Execution Rules
+
+- Every feature starts with a brief spec in `/docs` before implementation.
+- Write tests for adapters, normalization, scoring, merge logic, and pipeline stages.
+- If a task crosses more than two packages, split it.
+- Use Zod schemas at every boundary between packages.
+- Preserve provenance — never create derived intelligence without evidence links.
+- Update docs and ADRs when making architectural changes.
+- Keep merge/scoring logic deterministic where possible. Use models for semantic interpretation, not for basic system correctness.
+
+## Definition of Done
+
+A task is not done unless: types are correct, schemas validate, tests pass, docs updated if needed, provenance preserved, privacy contract preserved, and no hidden remote behavior was introduced.
+
+For **feature-sized or roadmap-aligned** work, also update **`docs/build-log/`** (new or updated log file + index in `docs/build-log/README.md`). See the **build-log** Cursor rule.
